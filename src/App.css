@@ -1,0 +1,19 @@
+/**
+ * TODO: do the refactor!
+ */
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: cener;
+  justify-content: center;
+  background: #222;
+  padding: 2em;
+}
+
+.App {
+  max-width: 600px;
+  padding: 2em;
+  background: #f9f9f9;
+  color: #444;
+}

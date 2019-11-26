@@ -1,0 +1,38 @@
+{
+  "name": "jayway-worksample",
+  "version": "1.0.0",
+  "description": "Quiz application",
+  "main": "server.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theted/jayway-worksample.git"
+  },
+  "author": "Fredrik Sundberg <fredrik@sundbergmedia.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theted/jayway-worksample/issues"
+  },
+  "homepage": "https://github.com/theted/jayway-worksample#readme",
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "^3.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
