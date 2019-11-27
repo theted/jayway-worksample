@@ -1,19 +1,65 @@
-/**
- * TODO: do the refactor!
- */
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,800,900&display=swap");
+html,
 body {
-  min-height: 100vh;
+  font-family: Poppins, sans-serif;
+  font-weight: 300;
+  font-size: 112%;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+a {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+#app {
+  font-family: Poppins, sans-serif;
+}
+a {
+  color: #d3d3d3;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 300ms;
+}
+a:hover {
+  color: #fff;
+}
+#app > p {
+  margin-bottom: 1em;
+}
+body {
   display: flex;
-  align-items: cener;
+  align-items: center;
   justify-content: center;
-  background: #222;
+  min-height: 100%;
+  background: #eee;
+}
+.App {
+  max-width: 700px;
   padding: 2em;
 }
-
-.App {
-  max-width: 600px;
-  padding: 2em;
-  background: #f9f9f9;
-  color: #444;
+.question {
+  border: 1px solid #00f;
+}
+.answer {
+  border: 1px solid #ccc;
+  width: 100%;
+  cursor: pointer;
+  transition: background 300ms;
+}
+.answer:hover {
+  background: #999;
+}
+.correct {
+  background: #008000;
+}
+.incorrect {
+  background: #f00;
 }
