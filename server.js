@@ -7,10 +7,7 @@ const app = express()
 const _ = require('lodash')
 const config = { port: 4244 }
 const questions = require('./data/questions.json')
-const questionsNoAnswers = questions
-questionsNoAnswers.forEach(question => delete question.correct)
-
-console.log('pick Qq\'s:', questionsNoAnswers)
+const questionsNoAnswers = questions.forEach(question => delete question.correct)
 
 // allow CORS
 app.use(cors())
@@ -25,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'src')))
 
 // output questions data - randomized order for each request
 app.get('/questions', async (req, res, next) => {
-  res.send(_.shuffle(questionsNoAnswers))
+  res.send(_.shuffle(questions))
 })
 
 // POST quiz results
