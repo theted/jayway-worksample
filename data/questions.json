@@ -1,0 +1,76 @@
+[
+  {
+    "id": 0,
+    "question": "Which is the largest island in the world?",
+    "answers": [
+      "Greenland",
+      "Iceland",
+      "Australia"
+    ],
+    "correct": "Greenland"
+  },
+  {
+    "id": 1,
+    "question": "What does PHP stand for?",
+    "answers": [
+      "Hypertext Pre-processor",
+      "Personal HTML Pages",
+      "Professional HTML Parser"
+    ],
+    "correct": "Hypertext Pre-processor"
+  },
+  {
+    "id": 2,
+    "question": "What is the number of decimals in π?",
+    "answers": [
+      "4",
+      "3.14",
+      "3.14 trillion",
+      "Technically infinite"
+    ],
+    "correct": "Technically infinite"
+  },
+  {
+    "id": 3,
+    "question": "Which Swedish bird rules the browser?",
+    "answers": [
+      "Måsvingen",
+      "Hakparamesen",
+      "DOMHerren",
+      "Kokokol"
+    ],
+    "correct": "DOMHerren"
+  },
+  {
+    "id": 4,
+    "question": "What is the result of: Array(16).join('lol' - 2) + ' Batman!';",
+    "answers": [
+      "False",
+      "lol",
+      "Error",
+      "NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!"
+    ],
+    "correct": "NaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaNNaN Batman!"
+  },
+  {
+    "id": 5,
+    "question": "Which of the following is the oldest javascript framework?",
+    "answers": [
+      "React",
+      "Angular",
+      "Vue"
+    ],
+    "correct": "Angular"
+  },
+  {
+    "id": 6,
+    "question": "In javscript, what doas \"NaN === NaN\" equal to?",
+    "answers": [
+      "false",
+      "Not a number",
+      "Error [...]",
+      "Wut?"
+    ],
+    "correct": "false"
+  }
+]
