@@ -1,0 +1,57 @@
+.progressbar
+  border: 1px solid green
+  width: 100%
+  background: linear-gradient(#061609, #2c2f2d)
+  box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.1)
+  max-width: 100%
+  overflow: hidden
+
+  .inner
+    padding: .4em 
+    background: linear-gradient(45deg, darkgreen, green)
+    box-shadow: inset 2px 4px 40px rgba(0, 20, 0, 0.25)
+    position: relative
+    // transition: width 500ms
+    
+    &:after
+      position: absolute
+      top: 0
+      left: 0
+      bottom: 0
+      content: " "
+      width: 100%
+      display: block
+      background: linear-gradient(-90deg, transparent, rgba(230, 255, 235, 0.1), transparent)
+      background-size: 300%
+      animation: gradientAnimation 4s infinite
+      animation-fill-mode: both
+
+  p
+    display: block
+    position: relative
+    top: .05em
+    left: .1em
+    z-index: 111
+    min-width: 300px
+    font-size: 62%
+    white-space: nowrap
+    max-height: 20px
+    overflow: hidden
+    // opacity: 0
+
+
+
+@keyframes gradientAnimation {
+  from {
+    background-position: 0
+  }
+  to {
+    background-position: 300% 0
+  }
+}
+
+
+.progress-timer
+  z-index: 2
+  max-height: 444px
+  position: fixed

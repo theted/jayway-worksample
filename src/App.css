@@ -3,6 +3,84 @@
   padding: 0;
   box-sizing: border-box;
 }
+.animated {
+  animation-duration: 600ms;
+  animation-fill-mode: both;
+}
+.fadeIn {
+  animation-name: fadeIn;
+}
+.zoomIn {
+  animation-name: zoomIn;
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@-o-keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+  50% {
+    opacity: 1;
+  }
+}
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,800,900&display=swap");
 html,
 body {
@@ -17,7 +95,6 @@ h4,
 h5,
 a {
   font-weight: 700;
-  text-transform: uppercase;
 }
 #app {
   font-family: Poppins, sans-serif;
@@ -34,25 +111,125 @@ a:hover {
 #app > p {
   margin-bottom: 1em;
 }
+button {
+  border: none;
+  background: #eee;
+  padding: 0.5em;
+  font-size: 112%;
+}
+.progressbar {
+  border: 1px solid #008000;
+  width: 100%;
+  background: linear-gradient(#061609, #2c2f2d);
+  box-shadow: 2px 4px 20px rgba(0,0,0,0.1);
+  max-width: 100%;
+  overflow: hidden;
+}
+.progressbar .inner {
+  padding: 0.4em;
+  background: linear-gradient(45deg, #006400, #008000);
+  box-shadow: inset 2px 4px 40px rgba(0,20,0,0.25);
+  position: relative;
+}
+.progressbar .inner:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  content: " ";
+  width: 100%;
+  display: block;
+  background: linear-gradient(-90deg, transparent, rgba(230,255,235,0.1), transparent);
+  background-size: 300%;
+  animation: gradientAnimation 4s infinite;
+  animation-fill-mode: both;
+}
+.progressbar p {
+  display: block;
+  position: relative;
+  top: 0.05em;
+  left: 0.1em;
+  z-index: 111;
+  min-width: 300px;
+  font-size: 62%;
+  white-space: nowrap;
+  max-height: 20px;
+  overflow: hidden;
+}
+.progress-timer {
+  z-index: 2;
+  max-height: 444px;
+  position: fixed;
+}
+@-moz-keyframes gradientAnimation {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 300% 0;
+  }
+}
+@-webkit-keyframes gradientAnimation {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 300% 0;
+  }
+}
+@-o-keyframes gradientAnimation {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 300% 0;
+  }
+}
+@keyframes gradientAnimation {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 300% 0;
+  }
+}
 body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
-  background: #eee;
+  min-height: 100vh;
+  background-image: linear-gradient(178.1deg, #3c376a 8.5%, #171445 82.4%);
+  background-size: cover;
 }
 .App {
   max-width: 700px;
   padding: 2em;
 }
-.question {
-  border: 1px solid #00f;
+.progress-timer {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #333;
+  color: #efefef;
+  max-height: 20px;
+}
+.question,
+.container {
+  border: 1px solid rgba(250,250,250,0.2);
+  background-image: linear-gradient(178.1deg, #3c376a 8.5%, #171445 82.4%);
+  padding: 2em;
+  margin: 1em 0;
+  border-radius: 0.15em;
+  color: #eee;
 }
 .answer {
-  border: 1px solid #ccc;
   width: 100%;
+  padding: 0.5em;
   cursor: pointer;
   transition: background 300ms;
+  word-wrap: break-word;
 }
 .answer:hover {
   background: #999;
@@ -62,4 +239,36 @@ body {
 }
 .incorrect {
   background: #f00;
+}
+.life-lines {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 100%;
+  max-width: 250px;
+  border: 1px solid #ccc;
+  background: #f3f3f3;
+  color: #444;
+}
+.special {
+  background: #f3f3f3;
+  padding: 1em;
+  font-size: 132%;
+}
+.ScoreBoard {
+  background: #fff;
+  padding: 1em;
+  position: fixed;
+  left: 0;
+  top: 50px;
+  margin: 1em;
+}
+.debug {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 1em;
+  padding: 1em;
+  background: #f00;
+  color: #fff;
 }

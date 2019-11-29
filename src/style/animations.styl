@@ -1,0 +1,29 @@
+.animated
+  animation-duration: 600ms
+  animation-fill-mode: both
+
+
+
+@keyframes fadeIn
+  from
+    opacity: 0
+
+  to
+    opacity: 1
+
+.fadeIn
+  animation-name: fadeIn
+
+
+
+@keyframes zoomIn
+  from
+    opacity: 0
+    transform: scale3d(0.8, 0.8, 0.8)
+
+  50%
+    opacity: 1
+  
+
+.zoomIn
+  animation-name: zoomIn
