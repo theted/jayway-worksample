@@ -6,13 +6,16 @@ import TimerService from '../services/timer.js'
 import ProgressTimer from './progresstimer.js'
 import LifeLines from './Lifelines.js'
 import ScoreBoard from './ScoreBoard.js'
+import Notificatios from './Notifications.js'
 import config, * as Config from '../config.js'
-import Timer from "./timer.js"
-// import Timer from '../services/timer.js'
-// const timer = new Timer()
-// console.log('Using timer:', timer)
+// import Timer from "./timer.js"
+import Timer from '../services/timer.js'
+import Debug from './Debug.js'
+const timer = new Timer()
 
-console.log('Using config:', Config)
+// debug
+console.log('Using timer:', timer)
+// console.log('Using config:', Config)
 
 const Quiz = props => {
   const [isStarted, setQuizStarted] = useState(true)
@@ -26,54 +29,58 @@ const Quiz = props => {
   // get quiz questions from API backend on component init
   useEffect(() => API.getQuestions().then(setQuestions), [])
 
+  // setup timer stuff
+  timer.watchEffect(time => {
+    console.log('TIMER affect;', time)
+  })
+
   const startQuiz = () => {
     setQuizStarted(true)
-    // timer.start()
+    timer.start()
   }
 
   const resetQuiz = () => {
+    // TODO: re-fetch questions?
+    setQuizStarted(0)
     setAnsweredQuestions(0)
     setCorrectAnswers(0)
+    timer.reset()
   }
 
   // submit user anser to API
   const handleSendAnswer = async (question, answer) => {
-    console.log('Send answer...', { question, answer })
 
     // pause the timer first
-    // we can do theeese
-
+    timer.pause()
 
     let result = await API.sendAnwer(question, answer)
     let correctResult = (result === 'Correct answer!')
-    console.log((correctResult) ? 'Correct!' : 'Incorrect guess!')
 
     // update score
     setAnsweredQuestions(answeredQuestions + 1)
     if (correctResult) setCorrectAnswers(correctAnwers + 1)
 
+    // increment number of answered questions, triggering update to show next question
+    setCurrentQuestionID(currentQuestionID + 1)
+
+    // re-start the timer...
+    timer.restart()
+
     // set state depending on result
     return correctResult
   }
 
-  // ? Lists _all questions, which is of course not intended.
-  // <th value={column} onClick={() => this.handleSort(column)}>{column}</th>
-
-  // reset the game
-  const doReset = () => {
-    console.log('We reset teh game!')
-    setQuizStarted(false)
+  let getQuestion = questionData => {
+    let { id, question, answers } = questionData
+    return <QuestionCard question={question} answers={answers} key={id} id={id} sendAnswer={handleSendAnswer} />
   }
 
-
-  let questionsList = (questions) ? questions.map(({ id, question, answers }) =>
-    <QuestionCard question={question} answers={answers} key={id} id={id} sendAnswer={handleSendAnswer} />
-  ) : <p>Waiting for questions...</p>
-
-
-  // let currQuestion = questions[currentQuestionID]
-  // let firstQuestionUI = <QuestionCard question={currQuestion.question} />
-  let currentQuestion = <p>This is the initial question...</p>
+  // loop through questions as gam progresses...
+  let currentQuestion = id => {
+    if (!questions) return <p>loading questions...</p>
+    if (id == 'undefined' || !questions[id]) return <p>No question ID specified...</p>
+    return getQuestion(questions[id])
+  }
 
   let output = (!isStarted) ?
     <div>
@@ -82,14 +89,15 @@ const Quiz = props => {
       <Button onClick={startQuiz} text="Start quiz!" className="success" />
     </div> :
     <div>
+      <Debug data={timer.getCurrent()} />
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
-      <ProgressTimer progressState={timeRemaining} />
+      <ProgressTimer progress={timeRemaining} />
+      <Notificatios message="Waiting for notes..." />
       <LifeLines />
-      <Timer />
-      {currentQuestion} !!!
-      {questionsList}
-      <Button onClick={doReset} text="Reset game" />
+      {currentQuestion(currentQuestionID)}
+      <Button onClick={resetQuiz} text="Reset game" />
     </div>
+
 
   return (
     <div className="quiz">
