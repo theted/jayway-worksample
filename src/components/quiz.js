@@ -2,37 +2,35 @@ import React, { useState, useEffect } from "react"
 import API from '../services/api.js'
 import Button from './button.js'
 import QuestionCard from './questionCard.js'
-import TimerService from '../services/timer.js'
 import ProgressTimer from './progresstimer.js'
 import LifeLines from './Lifelines.js'
 import ScoreBoard from './ScoreBoard.js'
 import Notificatios from './Notifications.js'
-import config, * as Config from '../config.js'
-// import Timer from "./timer.js"
-import Timer from '../services/timer.js'
+import * as Config from '../config.js'
+import TimerService from '../services/timer.js'
 import Debug from './Debug.js'
-const timer = new Timer()
+const timer = new TimerService()
 
 // debug
 console.log('Using timer:', timer)
-// console.log('Using config:', Config)
+console.log('Using config:', Config)
 
 const Quiz = props => {
   const [isStarted, setQuizStarted] = useState(true)
   const [questions, setQuestions] = useState([])
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
   const [correctAnwers, setCorrectAnswers] = useState(0)
-  const [currentQustionId, setCurrentQuestionId] = useState(0)
-  const [timeRemaining, setTimeRemaining] = useState(10 * 1000)
   const [currentQuestionID, setCurrentQuestionID] = useState(0)
+  const [timerTime, setTimerTime] = useState(0)
 
   // get quiz questions from API backend on component init
   useEffect(() => API.getQuestions().then(setQuestions), [])
 
-  // setup timer stuff
-  timer.watchEffect(time => {
-    console.log('TIMER affect;', time)
-  })
+  // // // setup timer stuff
+  // timer.watchEffect(time => {
+  //   console.log('TIMER affect;', time)
+  //   setTimerTime(time)
+  // })
 
   const startQuiz = () => {
     setQuizStarted(true)
@@ -60,14 +58,19 @@ const Quiz = props => {
     setAnsweredQuestions(answeredQuestions + 1)
     if (correctResult) setCorrectAnswers(correctAnwers + 1)
 
-    // increment number of answered questions, triggering update to show next question
-    setCurrentQuestionID(currentQuestionID + 1)
-
-    // re-start the timer...
-    timer.restart()
+    getNextQuestion()
 
     // set state depending on result
     return correctResult
+  }
+
+  const getNextQuestion = () => {
+    setTimeout(() => {
+      // increment number of answered questions, triggering update to show next question
+      setCurrentQuestionID(currentQuestionID + 1)
+      // re-start the timer...
+      timer.restart()
+    }, 1000)
   }
 
   let getQuestion = questionData => {
@@ -78,8 +81,19 @@ const Quiz = props => {
   // loop through questions as gam progresses...
   let currentQuestion = id => {
     if (!questions) return <p>loading questions...</p>
-    if (id == 'undefined' || !questions[id]) return <p>No question ID specified...</p>
+    if (id === 'undefined' || !questions[id]) return <p>No question ID specified...</p>
     return getQuestion(questions[id])
+  }
+
+  // hax
+  setInterval(() => {
+    let time = timer.getTimeLeft()
+    // console.log('Set time:', time)
+    setTimerTime(time)
+  }, 1000 / 60)
+
+  const failFunc = () => {
+    console.log('Timer ended!')
   }
 
   let output = (!isStarted) ?
@@ -91,13 +105,12 @@ const Quiz = props => {
     <div>
       <Debug data={timer.getCurrent()} />
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
-      <ProgressTimer progress={timeRemaining} />
+      <ProgressTimer progress={timerTime} endCallback={failFunc} />
       <Notificatios message="Waiting for notes..." />
       <LifeLines />
       {currentQuestion(currentQuestionID)}
       <Button onClick={resetQuiz} text="Reset game" />
     </div>
-
 
   return (
     <div className="quiz">
