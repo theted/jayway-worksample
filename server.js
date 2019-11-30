@@ -7,7 +7,7 @@ const app = express()
 const _ = require('lodash')
 const config = { port: 4244 }
 const questions = require('./data/questions.json')
-const questionsNoAnswers = questions.forEach(question => delete question.correct)
+// const questionsNoAnswers = [...questions].forEach(question => delete question.correct)
 
 // allow CORS
 app.use(cors())
@@ -22,7 +22,8 @@ app.use(express.static(path.join(__dirname, 'src')))
 
 // output questions data - randomized order for each request
 app.get('/questions', async (req, res, next) => {
-  res.send(_.shuffle(questions))
+  // res.send(_.shuffle(questions))
+  res.send(questions)
 })
 
 // POST quiz results
@@ -30,13 +31,26 @@ app.post('/answer', (req, res, next) => {
   const { question, answer } = req.body
   const questionExists = (question && questions[question])
 
-  if (!questionExists) return res.send('question dos not exist!')
+  if (!questionExists) return res.send('question does not exist!')
 
   const correctAnswer = questions[question].correct
   const result = (correctAnswer === answer)
   const message = (result) ? 'Correct answer!' : question + ' is not "' + answer + '"..!'
   res.send(message)
 })
+
+// get 2 valid options for a given question
+// TODO: avoid exploit by limiting access to this method through sessions!
+app.post('/validAlternatives', (req, res, next) => {
+  let { question } = req.body
+  let answers = questions[question].answers
+  let correctAnswer = questions[question].correct
+  let filtered = answers.filter(answer => answer !== correctAnswer)
+  let item = filtered[Math.floor(Math.random() * filtered.length)] // select a random item
+  let items = _.shuffle([item, correctAnswer])
+  res.send(items)
+})
+
 
 // serve index.html to all other GET requests
 app.get('/*', (req, res, next) => {
