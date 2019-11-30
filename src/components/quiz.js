@@ -5,7 +5,6 @@ import QuestionCard from './questionCard.js'
 import ProgressTimer from './progresstimer.js'
 import LifeLines from './Lifelines.js'
 import ScoreBoard from './ScoreBoard.js'
-import Notificatios from './Notifications.js'
 import * as Config from '../config.js'
 import TimerService from '../services/timer.js'
 import Debug from './Debug.js'
@@ -15,8 +14,11 @@ const timer = new TimerService()
 console.log('Using timer:', timer)
 console.log('Using config:', Config)
 
+/**
+ * Quiz component
+ */
 const Quiz = props => {
-  const [isStarted, setQuizStarted] = useState(true)
+  const [isStarted, setQuizStarted] = useState(false)
   const [questions, setQuestions] = useState([])
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
   const [correctAnwers, setCorrectAnswers] = useState(0)
@@ -67,6 +69,7 @@ const Quiz = props => {
   const getNextQuestion = () => {
     setTimeout(() => {
       // increment number of answered questions, triggering update to show next question
+      // TODO: show score scren after last question
       setCurrentQuestionID(currentQuestionID + 1)
       // re-start the timer...
       timer.restart()
@@ -74,7 +77,9 @@ const Quiz = props => {
   }
 
   let getQuestion = questionData => {
+    // setCurrQuestion(questionData)
     let { id, question, answers } = questionData
+    console.log('Question data:', questionData)
     return <QuestionCard question={question} answers={answers} key={id} id={id} sendAnswer={handleSendAnswer} />
   }
 
@@ -82,34 +87,56 @@ const Quiz = props => {
   let currentQuestion = id => {
     if (!questions) return <p>loading questions...</p>
     if (id === 'undefined' || !questions[id]) return <p>No question ID specified...</p>
+    if (id !== currentQuestionID) return false
+
+    if (currentQuestionID !== id) {
+      return setCurrentQuestionID(id)
+    }
+
     return getQuestion(questions[id])
   }
 
-  // hax
+  const newQuestionRender = data => {
+    console.log('Render w/ data:', data)
+  }
+
+  // lifelines
+  const lifelineExtratime = () => timer.addTime(10 * 1000)
+
+  // life-line remove 50% of incorrect answers
+  const lifelineRemovehalf = async () => {
+    let result = await API.getValidAlternatives(currentQuestionID)
+
+    questions[currentQuestionID].answers = result // ['herp', 'derp']
+
+    // trigger update
+    setCurrentQuestionID(setCurrentQuestionID)
+  }
+
+  // // hax
   setInterval(() => {
-    let time = timer.getTimeLeft()
-    // console.log('Set time:', time)
-    setTimerTime(time)
+    setTimerTime(timer.getTimeLeft())
   }, 1000 / 60)
 
-  const failFunc = () => {
+  const timerEnd = () => {
     console.log('Timer ended!')
+    // get next question
+    // setCurrentQuestionID(currentQuestionID + 1)
   }
 
   let output = (!isStarted) ?
-    <div>
+    <div className="quiz container animated fadeIn">
       <h1>Quiz time!</h1>
-      <p className="lead">This quiz will test your general knowledge! You have 10 seconds to answer each question, with 2 life-lines. Best of luck!</p>
+      <p className="lead">This quiz will test your general knowledge in a variety of subjects! You have 15 seconds to answer each question, with 2 life-lines. Best of luck!</p>
       <Button onClick={startQuiz} text="Start quiz!" className="success" />
     </div> :
     <div>
       <Debug data={timer.getCurrent()} />
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
-      <ProgressTimer progress={timerTime} endCallback={failFunc} />
-      <Notificatios message="Waiting for notes..." />
-      <LifeLines />
+      <ProgressTimer progress={timerTime} endCallback={timerEnd} />
+      <LifeLines removeHalf={lifelineRemovehalf} addTime={lifelineExtratime} />
       {currentQuestion(currentQuestionID)}
-      <Button onClick={resetQuiz} text="Reset game" />
+      <Button id="resetButton" onClick={resetQuiz} text="Reset game" />
     </div>
 
   return (
