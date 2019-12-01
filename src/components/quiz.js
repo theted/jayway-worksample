@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import API from '../services/api.js'
-import Button from './button.js'
+import Button from './Button.js'
 import QuestionCard from './questionCard.js'
 import ProgressTimer from './progresstimer.js'
 import LifeLines from './Lifelines.js'
@@ -24,6 +24,7 @@ const Quiz = props => {
   const [correctAnwers, setCorrectAnswers] = useState(0)
   const [currentQuestionID, setCurrentQuestionID] = useState(0)
   const [timerTime, setTimerTime] = useState(0)
+  const [totalQuestions, setTotalQuestions] = useState(0)
 
   // get quiz questions from API backend on component init
   useEffect(() => API.getQuestions().then(setQuestions), [])
@@ -76,10 +77,11 @@ const Quiz = props => {
     }, 1000)
   }
 
+  // TODO: fix this function being called unneccesarily!
   let getQuestion = questionData => {
     // setCurrQuestion(questionData)
     let { id, question, answers } = questionData
-    console.log('Question data:', questionData)
+    // console.log('Question data:', questionData)
     return <QuestionCard question={question} answers={answers} key={id} id={id} sendAnswer={handleSendAnswer} />
   }
 
@@ -120,8 +122,17 @@ const Quiz = props => {
 
   const timerEnd = () => {
     console.log('Timer ended!')
+
+    // TODO: set some output message
+
+    // TODO: fix this ugly logic
+    timer.pause()
+    setTimeout(() => {
+      timer.reset()
+    }, 1000)
+
     // get next question
-    // setCurrentQuestionID(currentQuestionID + 1)
+    getNextQuestion()
   }
 
   let output = (!isStarted) ?
