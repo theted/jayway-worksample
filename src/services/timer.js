@@ -3,9 +3,9 @@
  */
 
 class Timer {
-  constructor() {
+  constructor(max) {
     this.current = 0
-    this.max = 15 * 1000 // max time, in ms
+    this.max = max
     this.interval = 1000 / 60 // update rate / 60 fps
   }
 
@@ -25,6 +25,11 @@ class Timer {
   restart() {
     this.reset()
     this.start()
+  }
+
+  addTime(ms) {
+    console.log('Adding time to timer...')
+    this.current -= ms
   }
 
   watchEffect(func) {

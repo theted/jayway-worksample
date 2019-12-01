@@ -8,7 +8,7 @@ import ScoreBoard from './ScoreBoard.js'
 import * as Config from '../config.js'
 import TimerService from '../services/timer.js'
 import Debug from './Debug.js'
-const timer = new TimerService()
+const timer = new TimerService(Config.maxAnswerTime)
 
 // debug
 console.log('Using timer:', timer)
