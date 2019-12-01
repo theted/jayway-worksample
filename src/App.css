@@ -108,8 +108,44 @@ a {
 a:hover {
   color: #fff;
 }
-#app > p {
+p {
   margin-bottom: 1em;
+}
+.question,
+.container {
+  border: 1px solid rgba(250,250,250,0.2);
+  background-image: linear-gradient(178.1deg, #3c376a 8.5%, #171445 82.4%);
+  padding: 2.5em;
+  margin: 1em 0;
+  border-radius: 0.15em;
+  color: #eee;
+  width: 100%;
+  width: 800px;
+}
+.question h3,
+.container h3 {
+  font-weight: 900;
+  line-height: 200%;
+}
+.answer {
+  width: 100%;
+  padding: 0.5em;
+  cursor: pointer;
+  transition: background 300ms;
+  word-wrap: break-word;
+  border-bottom: 1px solid rgba(250,250,250,0.4);
+}
+.answer:last-of-type {
+  border: none;
+}
+.answer:hover {
+  background: rgba(250,250,250,0.1);
+}
+.correct {
+  background: #008000;
+}
+.incorrect {
+  background: #f00;
 }
 button {
   border: none;
@@ -130,6 +166,7 @@ button {
   background: linear-gradient(45deg, #006400, #008000);
   box-shadow: inset 2px 4px 40px rgba(0,20,0,0.25);
   position: relative;
+  transition: width 1000ms linear;
 }
 .progressbar .inner:after {
   position: absolute;
@@ -151,10 +188,11 @@ button {
   left: 0.1em;
   z-index: 111;
   min-width: 300px;
-  font-size: 62%;
+  font-size: 112%;
   white-space: nowrap;
-  max-height: 20px;
   overflow: hidden;
+  margin: 0;
+  font-weight: 300;
 }
 .progress-timer {
   z-index: 2;
@@ -193,16 +231,48 @@ button {
     background-position: 300% 0;
   }
 }
+@-moz-keyframes progressAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+@-webkit-keyframes progressAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+@-o-keyframes progressAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes progressAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
 body {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: linear-gradient(178.1deg, #3c376a 8.5%, #171445 82.4%);
+  background: #222;
   background-size: cover;
 }
 .App {
-  max-width: 700px;
+  max-width: 840px;
   padding: 2em;
 }
 .progress-timer {
@@ -215,40 +285,14 @@ body {
   color: #efefef;
   max-height: 20px;
 }
-.question,
-.container {
-  border: 1px solid rgba(250,250,250,0.2);
-  background-image: linear-gradient(178.1deg, #3c376a 8.5%, #171445 82.4%);
-  padding: 2em;
-  margin: 1em 0;
-  border-radius: 0.15em;
-  color: #eee;
-}
-.answer {
-  width: 100%;
-  padding: 0.5em;
-  cursor: pointer;
-  transition: background 300ms;
-  word-wrap: break-word;
-}
-.answer:hover {
-  background: #999;
-}
-.correct {
-  background: #008000;
-}
-.incorrect {
-  background: #f00;
-}
 .life-lines {
   position: absolute;
-  top: 50px;
-  right: 0px;
-  width: 100%;
-  max-width: 250px;
-  border: 1px solid #ccc;
-  background: #f3f3f3;
-  color: #444;
+  top: 60px;
+  right: 1em;
+}
+.life-lines > button {
+  margin: 0.2em;
+  border: 1px solid #999;
 }
 .special {
   background: #f3f3f3;
@@ -259,9 +303,8 @@ body {
   background: #fff;
   padding: 1em;
   position: fixed;
-  left: 0;
-  top: 50px;
-  margin: 1em;
+  top: 60px;
+  left: 1em;
 }
 .debug {
   position: fixed;
@@ -271,4 +314,8 @@ body {
   padding: 1em;
   background: #f00;
   color: #fff;
+}
+.debug,
+#resetButton {
+  display: none;
 }

@@ -11,7 +11,7 @@
     background: linear-gradient(45deg, darkgreen, green)
     box-shadow: inset 2px 4px 40px rgba(0, 20, 0, 0.25)
     position: relative
-    // transition: width 500ms
+    transition: width 1000ms linear
     
     &:after
       position: absolute
@@ -33,11 +33,13 @@
     left: .1em
     z-index: 111
     min-width: 300px
-    font-size: 62%
+    font-size: 112%
     white-space: nowrap
-    max-height: 20px
+    // max-height: 20px
     overflow: hidden
-    // opacity: 0
+    
+    margin: 0
+    font-weight: 300
 
 
 
@@ -47,6 +49,16 @@
   }
   to {
     background-position: 300% 0
+  }
+}
+
+
+@keyframes progressAnimation {
+  from {
+    width: 0%
+  }
+  to {
+    width: 100%
   }
 }
 
