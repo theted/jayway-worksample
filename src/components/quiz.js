@@ -25,9 +25,14 @@ const Quiz = props => {
   const [currentQuestionID, setCurrentQuestionID] = useState(0)
   const [timerTime, setTimerTime] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
+  const [gameEnded, setgameEnded] = useState(false)
 
   // get quiz questions from API backend on component init
-  useEffect(() => API.getQuestions().then(setQuestions), [])
+  // useEffect(() => API.getQuestions().then(setQuestions), [])
+  useEffect(() => API.getQuestions().then(data => {
+    setQuestions(data)
+    setTotalQuestions(Object.keys(data).length)
+  }), [])
 
   // // // setup timer stuff
   // timer.watchEffect(time => {
@@ -68,12 +73,16 @@ const Quiz = props => {
   }
 
   const getNextQuestion = () => {
+
     setTimeout(() => {
-      // increment number of answered questions, triggering update to show next question
-      // TODO: show score scren after last question
-      setCurrentQuestionID(currentQuestionID + 1)
-      // re-start the timer...
-      timer.restart()
+      if (answeredQuestions + 1 === totalQuestions) {
+        timer.reset()
+        setgameEnded(true)
+      } else {
+        // increment number of answered questions, triggering update to show next question
+        setCurrentQuestionID(currentQuestionID + 1)
+        timer.restart()
+      }
     }, 1000)
   }
 
@@ -90,16 +99,13 @@ const Quiz = props => {
     if (!questions) return <p>loading questions...</p>
     if (id === 'undefined' || !questions[id]) return <p>No question ID specified...</p>
     if (id !== currentQuestionID) return false
+    if (gameEnded) return false
 
     if (currentQuestionID !== id) {
       return setCurrentQuestionID(id)
     }
 
     return getQuestion(questions[id])
-  }
-
-  const newQuestionRender = data => {
-    console.log('Render w/ data:', data)
   }
 
   // lifelines
@@ -127,6 +133,7 @@ const Quiz = props => {
 
     // TODO: fix this ugly logic
     timer.pause()
+
     setTimeout(() => {
       timer.reset()
     }, 1000)
@@ -135,19 +142,27 @@ const Quiz = props => {
     getNextQuestion()
   }
 
-  let output = (!isStarted) ?
-    <div className="quiz container animated fadeIn">
-      <h1>Quiz time!</h1>
-      <p className="lead">This quiz will test your general knowledge in a variety of subjects! You have 15 seconds to answer each question, with 2 life-lines. Best of luck!</p>
-      <Button onClick={startQuiz} text="Start quiz!" className="success" />
-    </div> :
+  let quizMessage = 'This quiz will test your general knowledge in a variety of subjects - totally ' + totalQuestions + ' questions.  You have ' + (Config.maxAnswerTime / 1000) + ' seconds to answer each question, with 2 life-lines. Best of luck!'
+
+
+  let mainContent = (gameEnded) ?
     <div>
-      <Debug data={timer.getCurrent()} />
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
+    </div> : <div>
       <ProgressTimer progress={timerTime} endCallback={timerEnd} />
       <LifeLines removeHalf={lifelineRemovehalf} addTime={lifelineExtratime} />
       {currentQuestion(currentQuestionID)}
       <Button id="resetButton" onClick={resetQuiz} text="Reset game" />
+    </div>
+
+  let output = (!isStarted) ?
+    <div className="quiz container animated fadeIn">
+      <h1>Quiz time!</h1>
+      <p className="lead">{quizMessage}</p>
+      <Button onClick={startQuiz} text="Start quiz!" className="success" />
+    </div> :
+    <div>
+      {mainContent}
     </div>
 
   return (
