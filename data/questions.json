@@ -69,10 +69,10 @@
     "id": 6,
     "question": "In javscript, what doas \"NaN === NaN\" equal to?",
     "answers": [
-      "False",
+      "false",
       "NaN",
       "Error",
-      "True"
+      "true"
     ],
     "correct": "false"
   },
