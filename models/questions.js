@@ -36,7 +36,7 @@ const checkAnswer = (question, answer) => {
 
   const correctAnswer = questions[question].correct
   const result = (correctAnswer === answer)
-  const message = (result) ? 'Correct answer!' : question + ' is not "' + answer + '"..!'
+  const message = (result) ? 'Correct answer!' : 'Incorrect answer!'
   return message
 }
 
