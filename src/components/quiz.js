@@ -16,6 +16,7 @@ const Quiz = props => {
   const [isStarted, setQuizStarted] = useState(false)
   const [questions, setQuestions] = useState([])
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
+  const [timedOutQuestions, setTimedOutQuestions] = useState(0)
   const [correctAnwers, setCorrectAnswers] = useState(0)
   const [currentQuestionID, setCurrentQuestionID] = useState(0)
   const [temp, setTemp] = useState(0)
@@ -130,10 +131,13 @@ const Quiz = props => {
   // ! hax
   let timerUpdateInterval = setInterval(() => setTimerTime(timer.getTimeLeft()), 1000)
 
+  // callback function for whn timer ends
   const timerEnd = () => {
+    console.log('Timer END!')
     // TODO: set some output message
     timer.reset()
     timer.pause()
+    setTimeout(() => setTimedOutQuestions(timedOutQuestions + 1), 0)
     // setTimeout(() => timer.reset(), 1000)
     getNextQuestion()
   }
@@ -142,7 +146,7 @@ const Quiz = props => {
 
   let mainContent = (gameEnded) ?
     <div>
-      <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
+      <ScoreBoard score={correctAnwers} answers={answeredQuestions} timedOutAnswers={timedOutQuestions} />
       <Button id="resetButton" onClick={resetQuiz} text="New game" />
     </div> : <div>
       <ProgressTimer progress={timerTime} endCallback={timerEnd} />
