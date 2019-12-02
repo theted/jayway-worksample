@@ -5,8 +5,8 @@
 
 const _ = require('lodash')
 const questions = require('../data/questions.json')
-const questionsNoAnswers = [...questions]
-// questionsNoAnswers.forEach(question => delete question.correct)
+const questionsNoAnswers = JSON.parse(JSON.stringify(questions)) // because deep copy
+questionsNoAnswers.forEach(question => delete question.correct)
 
 
 /**
@@ -49,8 +49,8 @@ const getAlternatives = question => {
   let answers = questions[question].answers
   let correctAnswer = questions[question].correct
   let filtered = answers.filter(answer => answer !== correctAnswer)
-  let item = filtered[Math.floor(Math.random() * filtered.length)] // select a random item
-  let alternatives = _.shuffle([item, correctAnswer])
+  let incorrectAnswer = _.sample(filtered)
+  let alternatives = _.shuffle([incorrectAnswer, correctAnswer])
   return alternatives
 }
 

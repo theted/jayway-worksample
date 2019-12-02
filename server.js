@@ -6,9 +6,6 @@ const debug = require('debug')('app')
 const app = express()
 const _ = require('lodash')
 const config = require('./config')
-const questions = require('./data/questions.json')
-const questionsNoAnswers = [...questions]
-// questionsNoAnswers.forEach(question => delete question.correct)
 const questionsModel = require('./models/questions.js')
 
 // allow CORS
