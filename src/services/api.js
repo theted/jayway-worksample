@@ -13,6 +13,8 @@ const apiRequest = async (path, data) => {
 
 const getQuestions = async () => apiRequest('questions')
 const sendAnwer = async (question, answer) => apiRequest('answer', { question, answer })
+const getValidAlternatives = async (question) => apiRequest('validAlternatives', { question })
 
-export { getQuestions, sendAnwer }
-export default { getQuestions, sendAnwer }
+
+export { getQuestions, sendAnwer, getValidAlternatives }
+export default { getQuestions, sendAnwer, getValidAlternatives }
