@@ -106,15 +106,8 @@ const Quiz = props => {
     if (id === 'undefined' || !questions[id]) return <p>No question ID specified...</p>
     if (id !== currentQuestionID) return false
     if (gameEnded) return false
-
-    if (currentQuestionID !== id) {
-      return setCurrentQuestionID(id)
-    }
-
-    if (questions[id].id !== temp) {
-      setTemp(questions[id].id)
-    }
-
+    if (currentQuestionID !== id) return setCurrentQuestionID(id)
+    if (questions[id].id !== temp) return setTemp(questions[id].id)
     return getQuestion(questions[id])
   }
 
@@ -129,7 +122,7 @@ const Quiz = props => {
   }
 
   // ! hax
-  let timerUpdateInterval = setInterval(() => setTimerTime(timer.getTimeLeft()), 1000)
+  let timerUpdateInterval = setInterval(() => setTimerTime(timer.getTimeLeft()), 1000 / 60)
 
   // callback function for whn timer ends
   const timerEnd = () => {
