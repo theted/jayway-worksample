@@ -1,11 +1,12 @@
 [
   {
     "id": 0,
-    "question": "Which is the largest island in the world?",
+    "question": "Which is the world's largest iceland?",
     "answers": [
-      "Greenland",
-      "Iceland",
-      "Australia"
+      "Icland",
+      "Ireland",
+      "Gotland",
+      "Greenland"
     ],
     "correct": "Greenland"
   },
@@ -15,7 +16,8 @@
     "answers": [
       "Hypertext Pre-processor",
       "Personal HTML Pages",
-      "Professional HTML Parser"
+      "Professional HTML Parser",
+      "Pre-processing Hypertext Processing-engine"
     ],
     "correct": "Hypertext Pre-processor"
   },
@@ -58,7 +60,8 @@
     "answers": [
       "React",
       "Angular",
-      "Vue"
+      "Vue",
+      "Next.js"
     ],
     "correct": "Angular"
   },
@@ -66,11 +69,44 @@
     "id": 6,
     "question": "In javscript, what doas \"NaN === NaN\" equal to?",
     "answers": [
-      "false",
-      "Not a number",
-      "Error [...]",
-      "Wut?"
+      "False",
+      "NaN",
+      "Error",
+      "True"
     ],
     "correct": "false"
+  },
+  {
+    "id": 7,
+    "question": "How many kilograms of coffee does the average swede consume per year?",
+    "answers": [
+      "9",
+      "6",
+      "3",
+      "21"
+    ],
+    "correct": "9"
+  },
+  {
+    "id": 8,
+    "question": "What was JavaScript previously called?",
+    "answers": [
+      "LiveScript",
+      "CoffeeScript",
+      "WebScript",
+      "Gecko"
+    ],
+    "correct": "LiveScript"
+  },
+  {
+    "id": 9,
+    "question": "Which of the following is NOT a JavaScript library?",
+    "answers": [
+      "MooTools",
+      "Mocha",
+      "Knockout.js",
+      "Vanilla.js"
+    ],
+    "correct": "Vanilla.js"
   }
 ]
