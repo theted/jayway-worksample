@@ -18,6 +18,7 @@ const Quiz = props => {
   const [answeredQuestions, setAnsweredQuestions] = useState(0)
   const [correctAnwers, setCorrectAnswers] = useState(0)
   const [currentQuestionID, setCurrentQuestionID] = useState(0)
+  const [temp, setTemp] = useState(0)
   const [timerTime, setTimerTime] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [gameEnded, setgameEnded] = useState(false)
@@ -89,6 +90,7 @@ const Quiz = props => {
 
   // loop through questions as gam progresses...
   let currentQuestion = id => {
+    // TODO: fix timout on last question issue...
     if (!questions) return <p>loading questions...</p>
     if (id === 'undefined' || !questions[id]) return <p>No question ID specified...</p>
     if (id !== currentQuestionID) return false
@@ -96,6 +98,10 @@ const Quiz = props => {
 
     if (currentQuestionID !== id) {
       return setCurrentQuestionID(id)
+    }
+
+    if (questions[id].id !== temp) {
+      setTemp(questions[id].id)
     }
 
     return getQuestion(questions[id])
@@ -106,7 +112,7 @@ const Quiz = props => {
 
   // life-line remove 50% of incorrect answers
   const lifelineRemovehalf = async () => {
-    let result = await API.getValidAlternatives(currentQuestionID)
+    let result = await API.getValidAlternatives(temp)
 
     questions[currentQuestionID].answers = result
 
