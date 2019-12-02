@@ -166,7 +166,6 @@ button {
   background: linear-gradient(45deg, #006400, #008000);
   box-shadow: inset 2px 4px 40px rgba(0,20,0,0.25);
   position: relative;
-  transition: width 1000ms linear;
 }
 .progressbar .inner:after {
   position: absolute;
@@ -315,8 +314,4 @@ body {
   padding: 1em;
   background: #f00;
   color: #fff;
-}
-.debug,
-#resetButton {
-  display: none;
 }
