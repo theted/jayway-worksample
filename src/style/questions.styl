@@ -1,12 +1,18 @@
 .question, .container
   border: 1px solid rgba(250, 250, 250, 0.2)
-  background-image: linear-gradient( 178.1deg,  rgba(60,55,106,1) 8.5%, rgba(23,20,69,1) 82.4% )
+  background-image: linear-gradient( 178.1deg,  rgba(60,55,106,1) 8.5%, rgba(23,20,69,1) 82.4% ) !important
   padding: 2.5em
   margin: 1em 0
   border-radius: 0.15em
   color: #eee
   width: 100%
   width: 800px
+  text-align: left
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6)
+
+  &:disabled
+    &:hover
+      background: blue
 
   h3
     font-weight: 900
@@ -21,16 +27,20 @@
   transition: background 300ms
   word-wrap: break-word
   border-bottom: 1px solid rgba(250, 250, 250, 0.4)
+  background-image: linear-gradient( 178.1deg,  rgba(60,55,106,1) 8.5%, rgba(23,20,69,1) 82.4% ) !important
+  color: #999
+  transition: color 400ms, background 400ms
   &:last-of-type
     border: none
 
   &:hover
     background: rgba(250, 250, 250, 0.1)
+    color: #eee
 
-.correct
+button.correct
   background: green !important
 
-.incorrect
+button.incorrect
   background: red !important
 
 .correct, .incorrect
