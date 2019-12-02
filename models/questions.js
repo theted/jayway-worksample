@@ -30,7 +30,7 @@ const getQuestions = num => {
  * @returns {string} Result; correct or incorrect
  */
 const checkAnswer = (question, answer) => {
-  const questionExists = (question && questions[question])
+  const questionExists = (typeof question === 'number' && questions[question])
 
   if (!questionExists) return 'question does not exist!'
 
