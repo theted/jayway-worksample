@@ -10,10 +10,6 @@ import TimerService from '../services/timer.js'
 import Debug from './Debug.js'
 const timer = new TimerService(Config.maxAnswerTime)
 
-// debug
-console.log('Using timer:', timer)
-console.log('Using config:', Config)
-
 /**
  * Quiz component
  */
@@ -26,12 +22,12 @@ const Quiz = props => {
   const [timerTime, setTimerTime] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [gameEnded, setgameEnded] = useState(false)
+  const [currQuestion, setCurrQuestion] = useState({})
 
   // get quiz questions from API backend on component init
-  // useEffect(() => API.getQuestions().then(setQuestions), [])
-  useEffect(() => API.getQuestions().then(data => {
-    setQuestions(data)
-    setTotalQuestions(Object.keys(data).length)
+  useEffect(() => API.getQuestions().then(questions => {
+    setQuestions(questions)
+    setTotalQuestions(questions.length)
   }), [])
 
   // // // setup timer stuff
@@ -54,12 +50,12 @@ const Quiz = props => {
   }
 
   // submit user anser to API
-  const handleSendAnswer = async (question, answer) => {
+  const handleSendAnswer = async (questionID, answer) => {
 
     // pause the timer first
     timer.pause()
 
-    let result = await API.sendAnwer(question, answer)
+    let result = await API.sendAnwer(questionID, answer)
     let correctResult = (result === 'Correct answer!')
 
     // update score
@@ -88,9 +84,7 @@ const Quiz = props => {
 
   // TODO: fix this function being called unneccesarily!
   let getQuestion = questionData => {
-    // setCurrQuestion(questionData)
     let { id, question, answers } = questionData
-    // console.log('Question data:', questionData)
     return <QuestionCard question={question} answers={answers} key={id} id={id} sendAnswer={handleSendAnswer} />
   }
 
@@ -108,35 +102,27 @@ const Quiz = props => {
     return getQuestion(questions[id])
   }
 
-  // lifelines
+  // lifeline - add extra time to timer
   const lifelineExtratime = () => timer.addTime(10 * 1000)
 
   // life-line remove 50% of incorrect answers
   const lifelineRemovehalf = async () => {
     let result = await API.getValidAlternatives(currentQuestionID)
 
-    questions[currentQuestionID].answers = result // ['herp', 'derp']
+    questions[currentQuestionID].answers = result
 
     // trigger update
-    setCurrentQuestionID(setCurrentQuestionID)
+    setCurrentQuestionID(currentQuestionID)
   }
 
-  // // hax
-  setInterval(() => {
-    setTimerTime(timer.getTimeLeft())
-  }, 1000 / 60)
+  // ! hax
+  let timerUpdateInterval = setInterval(() => setTimerTime(timer.getTimeLeft()), 1000)
 
   const timerEnd = () => {
-    console.log('Timer ended!')
-
     // TODO: set some output message
-
     // TODO: fix this ugly logic
     timer.pause()
-
-    setTimeout(() => {
-      timer.reset()
-    }, 1000)
+    setTimeout(() => timer.reset(), 1000)
 
     // get next question
     getNextQuestion()
@@ -144,15 +130,14 @@ const Quiz = props => {
 
   let quizMessage = 'This quiz will test your general knowledge in a variety of subjects - totally ' + totalQuestions + ' questions.  You have ' + (Config.maxAnswerTime / 1000) + ' seconds to answer each question, with 2 life-lines. Best of luck!'
 
-
   let mainContent = (gameEnded) ?
     <div>
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
+      <Button id="resetButton" onClick={resetQuiz} text="Reset game" />
     </div> : <div>
       <ProgressTimer progress={timerTime} endCallback={timerEnd} />
       <LifeLines removeHalf={lifelineRemovehalf} addTime={lifelineExtratime} />
       {currentQuestion(currentQuestionID)}
-      <Button id="resetButton" onClick={resetQuiz} text="Reset game" />
     </div>
 
   let output = (!isStarted) ?

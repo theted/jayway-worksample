@@ -2,7 +2,6 @@ import React from 'react'
 
 const Button = props => {
   let { id, onClick, className, disabled, text } = props
-  console.log('Render button:', props)
 
   return (
     <button

@@ -6,7 +6,8 @@ const ScoreBoard = props => {
   const percentageWin = (score) ? Math.round((score / answers) * 100) : '0'
 
   return (
-    <div className="ScoreBoard">
+    <div className="container">
+      <h2>Score</h2>
       <p>{answers} answers</p>
       <p>{score} correct answers</p>
       <p>{incorrectAnswers} incorrect answers</p>
