@@ -5,7 +5,7 @@ const cors = require('cors')
 const debug = require('debug')('app')
 const app = express()
 const _ = require('lodash')
-const config = { port: 4244 }
+const config = require('./config')
 const questions = require('./data/questions.json')
 const questionsNoAnswers = [...questions]
 // questionsNoAnswers.forEach(question => delete question.correct)
@@ -29,7 +29,7 @@ app.get('/questions', async (req, res, next) => {
     question.answers = _.shuffle(question.answers)
   }
 
-  res.send(_.shuffle(questionsNoAnswers))
+  res.send(_.shuffle(questionsNoAnswers).splice(0, config.maxQuestions))
 })
 
 // POST quiz results
