@@ -24,29 +24,40 @@ const Quiz = props => {
   const [gameEnded, setgameEnded] = useState(false)
   const [currQuestion, setCurrQuestion] = useState({})
 
-  // get quiz questions from API backend on component init
-  useEffect(() => API.getQuestions().then(questions => {
-    setQuestions(questions)
-    setTotalQuestions(questions.length)
-  }), [])
+  const updateQuestions = async () => {
+    return API.getQuestions().then(questions => {
+      setQuestions(questions)
+      setTotalQuestions(questions.length)
+    })
+  }
 
-  // // // setup timer stuff
-  // timer.watchEffect(time => {
-  //   console.log('TIMER affect;', time)
-  //   setTimerTime(time)
-  // })
+  // get quiz questions from API backend on component init
+  useEffect(() => updateQuestions(), [])
+
+  // // setup timer stuff
+  timer.watchEffect(time => {
+    console.log('TIMER affect;', time)
+    // setTimerTime(time)
+  })
 
   const startQuiz = () => {
+    setgameEnded(false)
     setQuizStarted(true)
     timer.start()
   }
 
   const resetQuiz = () => {
-    // TODO: re-fetch questions?
     setQuizStarted(0)
     setAnsweredQuestions(0)
     setCorrectAnswers(0)
     timer.reset()
+
+    // get new questions!
+    updateQuestions().then(() => {
+      setCurrentQuestionID(0)
+      startQuiz()
+    })
+
   }
 
   // submit user anser to API
@@ -69,7 +80,6 @@ const Quiz = props => {
   }
 
   const getNextQuestion = () => {
-
     setTimeout(() => {
       if (answeredQuestions + 1 === totalQuestions) {
         timer.reset()
@@ -113,11 +123,8 @@ const Quiz = props => {
   // life-line remove 50% of incorrect answers
   const lifelineRemovehalf = async () => {
     let result = await API.getValidAlternatives(temp)
-
     questions[currentQuestionID].answers = result
-
-    // trigger update
-    setCurrentQuestionID(currentQuestionID)
+    setCurrentQuestionID(currentQuestionID) // trigger update
   }
 
   // ! hax
@@ -125,11 +132,9 @@ const Quiz = props => {
 
   const timerEnd = () => {
     // TODO: set some output message
-    // TODO: fix this ugly logic
+    timer.reset()
     timer.pause()
-    setTimeout(() => timer.reset(), 1000)
-
-    // get next question
+    // setTimeout(() => timer.reset(), 1000)
     getNextQuestion()
   }
 
@@ -138,7 +143,7 @@ const Quiz = props => {
   let mainContent = (gameEnded) ?
     <div>
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} />
-      <Button id="resetButton" onClick={resetQuiz} text="Reset game" />
+      <Button id="resetButton" onClick={resetQuiz} text="New game" />
     </div> : <div>
       <ProgressTimer progress={timerTime} endCallback={timerEnd} />
       <LifeLines removeHalf={lifelineRemovehalf} addTime={lifelineExtratime} />
