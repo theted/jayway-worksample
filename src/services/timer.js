@@ -7,10 +7,12 @@ class Timer {
     this.current = 0
     this.max = max
     this.interval = 1000 / 60 // update rate / 60 fps
+    this.loop = false
   }
 
   start() {
     this.reset()
+    if (this.loop) clearInterval(this.loop)
     this.loop = setInterval(() => this.tick(), this.interval)
   }
 
@@ -28,8 +30,11 @@ class Timer {
   }
 
   addTime(ms) {
-    console.log('Adding time to timer...')
     this.current -= ms
+  }
+
+  setMaxTime(ms) {
+    this.max = ms
   }
 
   watchEffect(func) {

@@ -3,7 +3,6 @@ import Button from './Button.js'
 
 const Lifelines = props => {
   const { removeHalf, addTime } = props
-  const [usedLifeLines, setUsedLifelines] = useState([])
   const [removeHalfUsed, setRemoveHalfUsed] = useState(false)
   const [addTimeUsed, setAddTimeUsed] = useState(false)
 

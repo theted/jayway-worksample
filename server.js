@@ -41,6 +41,7 @@ app.post('/validAlternatives', (req, res, next) => {
 
 // serve index.html to all other GET requests
 app.get('/*', (req, res, next) => {
+  console.log('RAND rq...')
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
