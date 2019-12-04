@@ -1,5 +1,9 @@
 # Jayway-worksample; quiz application!
 
+### Public demo
+Available at https://jayway.sundbergmedia.com
+
+
 ### Installation
 Clone this repo
 ```
@@ -18,7 +22,7 @@ Start the frontend server
 npm start
 ```
 
-Start the backend server
+Additionally, start the backend server
 ```
 node server
 ```
@@ -27,7 +31,7 @@ node server
 Running tests (using [jest] + [Enzyme])
 
 ```
-npm run test
+npm test
 ```
 
 
