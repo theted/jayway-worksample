@@ -6,6 +6,7 @@ const endpoint = (environment === 'production') ? 'https://' + window.location.h
 // game configuration
 const maxQuestions = 10
 const maxAnswerTime = 15 * 1000 // in milliseconds
+const lifeLineExtraTime = 10 * 1000
 
-export { endpoint, maxQuestions, maxAnswerTime, port }
-export default { endpoint, maxQuestions, maxAnswerTime, port }
+export { endpoint, maxQuestions, maxAnswerTime, lifeLineExtraTime, port }
+export default { endpoint, maxQuestions, maxAnswerTime, lifeLineExtraTime, port }

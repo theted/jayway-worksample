@@ -112,7 +112,7 @@ const Quiz = props => {
   }
 
   // lifeline - add extra time to timer
-  const lifelineExtratime = () => timer.addTime(10 * 1000)
+  const lifelineExtratime = () => timer.addTime(Config.lifeLineExtraTime)
 
   // life-line remove 50% of incorrect answers
   const lifelineRemovehalf = async () => {
