@@ -335,10 +335,11 @@ button.incorrect {
   color: #fff !important;
 }
 button.answer,
-.anser,
+.answer,
 button {
   background: #800080;
   text-align: left !important;
+  color: #fff;
 }
 .answer,
 button.answer {
