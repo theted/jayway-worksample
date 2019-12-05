@@ -112,7 +112,7 @@ p {
   margin-bottom: 1em;
 }
 button {
-  border: none;
+  border: none !important;
   background: #eee;
   padding: 0.5em;
   font-size: 112%;
@@ -257,6 +257,18 @@ body {
 .life-lines > button {
   margin: 0.2em;
   border: 1px solid #999;
+  transition: all 300ms;
+}
+.life-lines > button:hover {
+  cursor: pointer;
+}
+.life-lines > button:disabled {
+  opacity: 0.7;
+  color: #bbb;
+}
+.life-lines > button:disabled:hover {
+  cursor: inherit;
+  color: #bbb;
 }
 .special {
   background: #f3f3f3;
@@ -322,7 +334,7 @@ button.answer:last-of-type {
 .answer:hover,
 button.answer:hover {
   background: rgba(250,250,250,0.1);
-  color: #eee;
+  color: #fff;
 }
 button.correct {
   background: #008000 !important;
@@ -339,6 +351,12 @@ button.answer,
 button {
   background: #800080;
   text-align: left !important;
+  color: #ccc;
+  transition: color 300ms, background 300ms;
+}
+button.answer:hover,
+.answer:hover,
+button:hover {
   color: #fff;
 }
 .answer,

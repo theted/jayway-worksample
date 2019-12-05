@@ -37,7 +37,7 @@
 
   &:hover
     background: rgba(250, 250, 250, 0.1)
-    color: #eee
+    color: #fff
 
 button.correct
   background: green !important
@@ -52,7 +52,11 @@ button.incorrect
 button.answer, .answer, button
   background: purple
   text-align: left !important
-  color: white
+  color: #ccc
+  transition: color 300ms, background 300ms
+  &:hover
+    color: white
+  
 
 .answer, button.answer, .answer
   text-align: left !important
