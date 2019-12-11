@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 
 const Progressbar = props => {
-  let { progress, text } = props
+  const { progress, text } = props
 
   return (
     <div className="progressbar">

@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Quiz component Renders welcome message 1`] = `ShallowWrapper {}`;
-
-exports[`Quiz component know's what's true 1`] = `ShallowWrapper {}`;
-
-exports[`Quiz component renders welcome message 1`] = `ShallowWrapper {}`;

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Button = props => {
-  let { id, onClick, className, disabled, text } = props
+  const { id, onClick, className, disabled, text } = props
 
   return (
     <button

@@ -3,61 +3,61 @@
  */
 
 class Timer {
-  constructor(max) {
+  constructor (max) {
     this.current = 0
     this.max = max
-    this.interval = 1000 / 60 // update rate / 60 fps
+    this.interval = 1000 / 20 // update rate / 60 fps
     this.loop = false
   }
 
-  start() {
+  start () {
     this.reset()
-    if (this.loop) clearInterval(this.loop)
+    // if (this.loop)
+    clearInterval(this.loop)
     this.loop = setInterval(() => this.tick(), this.interval)
   }
 
-  pause() {
+  pause () {
     clearInterval(this.loop)
   }
 
-  reset() {
+  reset () {
     this.current = 0
   }
 
-  restart() {
+  restart () {
     this.reset()
     this.start()
   }
 
-  addTime(ms) {
+  addTime (ms) {
     this.current -= ms
   }
 
-  setMaxTime(ms) {
+  setMaxTime (ms) {
     this.max = ms
   }
 
-  watchEffect(func) {
+  watchEffect (func) {
     func(this.current)
   }
 
-  tick() {
+  tick () {
     // TODO; make time-accurate!
     this.current += this.interval
   }
 
-  getCurrent() {
+  getCurrent () {
     return Math.round(this.current)
   }
 
-  getTimeLeft() {
+  getTimeLeft () {
     return Math.round(this.max - this.current)
   }
 
-  getProgressProcent() {
+  getProgressProcent () {
     return (this.max - this.current) / 100
   }
-
 }
 
 export default Timer

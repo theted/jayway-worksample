@@ -3,7 +3,6 @@ import React from 'react'
 import Quiz from '../components/quiz.js'
 
 describe('Quiz component', () => {
-
   it('Renders without crashing', () => {
     shallow(<Quiz />)
   })
@@ -16,5 +15,4 @@ describe('Quiz component', () => {
   })
 
   // TODO: quiz can be started
-
 })

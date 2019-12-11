@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 import Button from './Button.js'
 
 const useForceUpdate = () => {
@@ -7,14 +7,14 @@ const useForceUpdate = () => {
 }
 
 const QuestionCard = props => {
-  let { id, question, answers, sendAnswer } = props
+  const { id, question, answers, sendAnswer } = props
   const forceUpdate = useForceUpdate()
   const [answ, setAnws] = useState([])
   const [isClicked, setClicked] = useState(false)
 
   // submit answer to backend, handle response
   const handleSendAnswer = async event => {
-    let answer = event.target.innerHTML
+    const answer = event.target.innerHTML
 
     // TODO: temporarily disable button?
     console.log('CLICKY::', id, answer)

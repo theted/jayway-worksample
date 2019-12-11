@@ -5,7 +5,6 @@ const get = async (method) => await axios.get(endpoint + method)
 const post = async (method, data) => await axios.post(endpoint + method, data)
 
 describe('Questions API backend', () => {
-
   it('Serves questions without crashing', async done => {
     const res = await get('questions')
     expect(res.status).toBe(200)
@@ -55,5 +54,4 @@ describe('Questions API backend', () => {
     expect(res.data).toBe('Incorrect answer!')
     done()
   })
-
 })

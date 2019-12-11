@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import API from '../services/api.js'
 import Button from './Button.js'
 import QuestionCard from './questionCard.js'
@@ -58,17 +58,15 @@ const Quiz = props => {
       setCurrentQuestionID(0)
       startQuiz()
     })
-
   }
 
   // submit user anser to API
   const handleSendAnswer = async (questionID, answer) => {
-
     // pause the timer first
     timer.pause()
 
-    let result = await API.sendAnwer(questionID, answer)
-    let correctResult = (result === 'Correct answer!')
+    const result = await API.sendAnwer(questionID, answer)
+    const correctResult = (result === 'Correct answer!')
 
     // update score
     setAnsweredQuestions(answeredQuestions + 1)
@@ -94,13 +92,13 @@ const Quiz = props => {
   }
 
   // TODO: fix this function being called unneccesarily!
-  let getQuestion = questionData => {
-    let { id, question, answers } = questionData
+  const getQuestion = questionData => {
+    const { id, question, answers } = questionData
     return <QuestionCard question={question} answers={answers} key={id} id={id} sendAnswer={handleSendAnswer} />
   }
 
   // loop through questions as gam progresses...
-  let currentQuestion = id => {
+  const currentQuestion = id => {
     // TODO: fix timout on last question issue...
     if (!questions) return <p>loading questions...</p>
     if (id === 'undefined' || !questions[id]) return <p>No question ID specified...</p>
@@ -116,13 +114,13 @@ const Quiz = props => {
 
   // life-line remove 50% of incorrect answers
   const lifelineRemovehalf = async () => {
-    let result = await API.getValidAlternatives(temp)
+    const result = await API.getValidAlternatives(temp)
     questions[currentQuestionID].answers = result
     setCurrentQuestionID(currentQuestionID) // trigger update
   }
 
   // ! hax
-  let timerUpdateInterval = setInterval(() => setTimerTime(timer.getTimeLeft()), 1000 / 60)
+  const timerUpdateInterval = setInterval(() => setTimerTime(timer.getTimeLeft()), 1000 / 60)
 
   // callback function for whn timer ends
   const timerEnd = () => {
@@ -135,10 +133,10 @@ const Quiz = props => {
     getNextQuestion()
   }
 
-  let quizMessage = 'This quiz will test your general knowledge in a variety of subjects - totally ' + totalQuestions + ' questions.  You have ' + (Config.maxAnswerTime / 1000) + ' seconds to answer each question, with 2 life-lines. Best of luck!'
+  const quizMessage = 'This quiz will test your general knowledge in a variety of subjects - totally ' + totalQuestions + ' questions.  You have ' + (Config.maxAnswerTime / 1000) + ' seconds to answer each question, with 2 life-lines. Best of luck!'
 
-  let mainContent = (gameEnded) ?
-    <div>
+  const mainContent = (gameEnded)
+    ? <div>
       <ScoreBoard score={correctAnwers} answers={answeredQuestions} timedOutAnswers={timedOutQuestions} />
       <Button id="resetButton" onClick={resetQuiz} text="New game" />
     </div> : <div>
@@ -147,13 +145,13 @@ const Quiz = props => {
       {currentQuestion(currentQuestionID)}
     </div>
 
-  let output = (!isStarted) ?
-    <div className="quiz container animated fadeIn">
+  const output = (!isStarted)
+    ? <div className="quiz container animated fadeIn">
       <h1>Quiz time!</h1>
       <p className="lead">{quizMessage}</p>
       <Button onClick={startQuiz} text="Start quiz!" className="success" />
-    </div> :
-    <div>
+    </div>
+    : <div>
       {mainContent}
     </div>
 

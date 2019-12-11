@@ -3,7 +3,6 @@ import React from 'react'
 import Progressbar from '../components/progressbar.js'
 
 describe('Progressbar', () => {
-
   it('Renders without crashing', () => {
     shallow(<Progressbar />)
   })
@@ -11,5 +10,4 @@ describe('Progressbar', () => {
   it('Handles progress property', () => {
     shallow(<Progressbar progress="33" />)
   })
-
 })

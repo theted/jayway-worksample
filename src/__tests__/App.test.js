@@ -4,7 +4,6 @@ import App from '../App.js'
 import Quiz from '../components/quiz.js'
 
 describe('App component', () => {
-
   it('renders without crashing', () => {
     shallow(<App />)
   })
@@ -17,5 +16,4 @@ describe('App component', () => {
     const component = shallow(<App />)
     expect(component.getElements()).toMatchSnapshot()
   })
-
 })

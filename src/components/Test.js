@@ -1,10 +1,10 @@
-import React from "react"
+import React from 'react'
 
 /**
  * Issa test component
  */
 const Test = props => {
-  let { text } = props
+  const { text } = props
 
   return (
     <div className="Test">
