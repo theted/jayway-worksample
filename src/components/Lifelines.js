@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import Button from './Button.js'
 
 const Lifelines = props => {
@@ -22,6 +23,11 @@ const Lifelines = props => {
       <Button onClick={removeHalfCallback} text="50/50" disabled={removeHalfUsed} />
     </div>
   )
+}
+
+Lifelines.propTypes = {
+  removeHalf: PropTypes.func.isRequired,
+  addTime: PropTypes.func.isRequired
 }
 
 export default Lifelines

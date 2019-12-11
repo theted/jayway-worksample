@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * Issa test component
@@ -11,6 +12,10 @@ const Test = props => {
       <p>Text: {text}</p>
     </div >
   )
+}
+
+Test.propTypes = {
+  text: PropTypes.string
 }
 
 export default Test

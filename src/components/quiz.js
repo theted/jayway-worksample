@@ -23,7 +23,7 @@ const Quiz = props => {
   const [timerTime, setTimerTime] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [gameEnded, setgameEnded] = useState(false)
-  const [currQuestion, setCurrQuestion] = useState({})
+  // const [currQuestion, setCurrQuestion] = useState({})
 
   const updateQuestions = async () => {
     return API.getQuestions().then(questions => {

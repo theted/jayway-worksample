@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Progressbar from './progressbar.js'
 import * as Config from '../config.js'
 
@@ -17,6 +18,11 @@ const ProgressTimer = props => {
       <Progressbar progress={remainingPercent} text={displayText} />
     </div >
   )
+}
+
+ProgressTimer.propTypes = {
+  progress: PropTypes.number,
+  endCallback: PropTypes.func
 }
 
 export default ProgressTimer

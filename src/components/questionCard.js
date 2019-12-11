@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import Button from './Button.js'
 
 const useForceUpdate = () => {
@@ -42,6 +43,13 @@ const QuestionCard = props => {
       )}
     </div>
   )
+}
+
+QuestionCard.PropTypes = {
+  id: PropTypes.number,
+  question: PropTypes.string,
+  answers: PropTypes.array,
+  sendAnswer: PropTypes.func
 }
 
 export default QuestionCard

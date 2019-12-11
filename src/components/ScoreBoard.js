@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const ScoreBoard = props => {
   const { answers, score, timedOutAnswers } = props
@@ -15,6 +16,12 @@ const ScoreBoard = props => {
       <p>Percentage correct answers: {percentageWin}%</p>
     </div>
   )
+}
+
+ScoreBoard.propTypes = {
+  answers: PropTypes.number,
+  score: PropTypes.number,
+  timedOutAnswers: PropTypes.number
 }
 
 export default ScoreBoard
