@@ -45,7 +45,7 @@ const QuestionCard = props => {
   )
 }
 
-QuestionCard.PropTypes = {
+QuestionCard.propTypes = {
   id: PropTypes.number,
   question: PropTypes.string,
   answers: PropTypes.array,
